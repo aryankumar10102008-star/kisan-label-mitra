@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09672e">
+  <meta name="description" content="Hindi and English pesticide label reader prototype">
+  <title>लेबल पढ़ो – Pesticide Label Reader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">✿</div>
+        <div>
+          <p class="brand-name" id="app-name">लेबल पढ़ो</p>
+          <p class="brand-tagline" id="app-tagline">दवा का लेबल आसान भाषा में</p>
+        </div>
+      </div>
+      <div class="language-switch" role="group" aria-label="भाषा चुनें" id="language-group">
+        <button type="button" class="language-button active" data-lang="hi" aria-pressed="true">हिं</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" class="language-button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </header>
+
+    <main id="main-content" class="main-content">
+      <section id="home-screen" class="screen home-screen">
+        <input id="camera-input" class="visually-hidden" type="file" accept="image/*" capture="environment" tabindex="-1">
+        <input id="gallery-input" class="visually-hidden" type="file" accept="image/*" tabindex="-1">
+
+        <div id="photo-preview" class="photo-preview hidden">
+          <img id="preview-image" alt="Selected pesticide label">
+          <p><span aria-hidden="true">✓</span> <span id="photo-ready">फोटो तैयार है</span></p>
+        </div>
+
+        <button type="button" id="camera-button" class="camera-button">
+          <span class="camera-icon" aria-hidden="true">📷</span>
+          <span class="camera-title" id="camera-title">लेबल की फोटो लें</span>
+          <span class="camera-hint" id="camera-hint">कैमरा खोलें</span>
+        </button>
+
+        <button type="button" id="gallery-button" class="outline-button gallery-button">
+          <span aria-hidden="true">▧</span><span id="choose-gallery">गैलरी से चुनें</span>
+        </button>
+
+        <div class="form-field">
+          <label for="crop-input"><span aria-hidden="true">🌱</span> <span id="crop-label">आपकी फसल का नाम</span></label>
+          <input id="crop-input" type="text" autocomplete="off" placeholder="जैसे: कपास, धान, टमाटर">
+        </div>
+
+        <div class="form-field">
+          <label for="spray-date"><span aria-hidden="true">▦</span> <span id="spray-date-label">छिड़काव की तारीख</span></label>
+          <input id="spray-date" type="date">
+        </div>
+
+        <div class="submit-group">
+          <button type="button" id="read-button" class="read-button" disabled>
+            <span aria-hidden="true">▤</span><span id="read-label">लेबल पढ़ें</span>
+          </button>
+          <p id="need-photo" class="helper-text">पहले लेबल की फोटो लें</p>
+        </div>
+      </section>
+
+      <section id="loading-screen" class="screen loading-screen hidden" role="status" aria-live="polite">
+        <div class="spinner-wrap"><div class="spinner"></div><span aria-hidden="true">🌿</span></div>
+        <h1 id="loading-title">लेबल पढ़ा जा रहा है…</h1>
+        <p id="loading-body">थोड़ा इंतज़ार करें। हम लेबल के हर शब्द को ध्यान से पढ़ रहे हैं।</p>
+      </section>
+
+      <section id="result-screen" class="screen result-screen hidden" aria-live="polite">
+        <article class="toxicity-card" id="toxicity-card">
+          <div class="card-topline"><span id="toxicity-heading">ज़हर का स्तर</span><span class="sample-pill" id="sample-label">नमूना</span></div>
+          <h1><span aria-hidden="true">⚠</span><span id="toxicity-name"></span></h1>
+          <p id="toxicity-meaning"></p>
+          <p class="product-name" id="product-name"></p>
+        </article>
+
+        <div class="demo-warning" id="demo-warning">
+          ⚠ <span id="demo-warning-text">यह केवल नमूना डेटा है। इसका उपयोग छिड़काव या कटाई के फैसले के लिए न करें।</span>
+        </div>
+
+        <button type="button" id="listen-button" class="listen-button">
+          <span aria-hidden="true" id="listen-icon">🔊</span><span id="listen-label">सुनें</span>
+        </button>
+
+        <section class="info-card crop-card" id="crop-card">
+          <p class="eyebrow" id="crop-check">फसल जाँच</p>
+          <h2><span id="crop-status-icon" aria-hidden="true">?</span><span id="crop-status"></span></h2>
+          <p id="crop-message"></p>
+          <ul id="crop-list" class="crop-list"></ul>
+        </section>
+
+        <section class="info-card harvest-card">
+          <p class="eyebrow" id="harvest-heading">सुरक्षित कटाई की तारीख</p>
+          <h2 id="harvest-date"></h2>
+          <p id="harvest-note"></p>
+          <span class="wait-pill" id="wait-days"></span>
+        </section>
+
+        <div id="label-lines" class="label-lines"></div>
+        <button type="button" id="new-label-button" class="outline-button new-label-button">↻ <span id="new-label">नया लेबल पढ़ें</span></button>
+      </section>
+
+      <section id="error-screen" class="screen error-screen hidden" role="alert">
+        <div class="error-icon" aria-hidden="true">📷</div>
+        <h1 id="error-title">लेबल पढ़ नहीं पाए</h1>
+        <p id="error-body">फोटो धुंधली हो सकती है। लेबल को रोशनी में रखकर, पास से दोबारा फोटो लें।</p>
+        <button type="button" id="retry-button" class="listen-button">↻ <span id="retry-label">फिर से कोशिश करें</span></button>
+        <button type="button" id="home-button" class="outline-button">⌂ <span id="go-home">शुरुआत पर जाएँ</span></button>
+      </section>
+    </main>
+
+    <footer class="safety-footer">
+      <span aria-hidden="true">⚠</span>
+      <p id="footer-text">यह लेबल पर छपी बात समझाता है। छिड़काव से पहले कृषि अधिकारी से पूछें।</p>
+    </footer>
+  </div>
+</body>
+</html>

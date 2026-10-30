@@ -1,0 +1,28 @@
+# Mapping of English and Hindi crop names to one canonical name
+cotton: "cotton"
+कपास: "cotton"
+
+wheat: "wheat"
+गेहूं: "wheat"
+
+rice: "rice"
+paddy: "rice"
+धान: "rice"
+चावल: "rice"
+
+maize: "maize"
+corn: "maize"
+मक्का: "maize"
+
+sugarcane: "sugarcane"
+गन्ना: "sugarcane"
+
+mustard: "mustard"
+सरसों: "mustard"
+
+potato: "potato"
+आलू: "potato"
+
+tomato: "tomato"
+टमाटर: "tomato"
+

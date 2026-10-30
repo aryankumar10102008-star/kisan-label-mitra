@@ -1,0 +1,32 @@
+source: "TODO - team must fill the official source"
+source_url: "TODO"
+as_of: "TODO"
+verify_note: "Please verify against the current official rules."
+
+classes:
+  red:
+    meaning_en: "extremely toxic"
+    meaning_hi: "अत्यधिक विषैला"
+  yellow:
+    meaning_en: "highly toxic"
+    meaning_hi: "अधिक विषैला"
+  blue:
+    meaning_en: "moderately toxic"
+    meaning_hi: "मध्यम विषैला"
+  green:
+    meaning_en: "slightly toxic"
+    meaning_hi: "कम विषैला"
+
+red:
+  meaning_en: "extremely toxic"
+  meaning_hi: "अत्यधिक विषैला"
+yellow:
+  meaning_en: "highly toxic"
+  meaning_hi: "अधिक विषैला"
+blue:
+  meaning_en: "moderately toxic"
+  meaning_hi: "मध्यम विषैला"
+green:
+  meaning_en: "slightly toxic"
+  meaning_hi: "कम विषैला"
+
